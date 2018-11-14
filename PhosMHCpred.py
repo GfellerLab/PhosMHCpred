@@ -51,7 +51,7 @@ parser.add_argument( '-a',
 					 required=True )
 parser.add_argument( '-o',
 					 '--output',
-					 help='Output file. Default: results.txt in current directory.',
+					 help='Location for output file. Default: results.txt is stored in current directory.',
 					 default='./' )
 args = parser.parse_args()
 
@@ -102,7 +102,7 @@ for x in listAlleles:
 if args.output == '':
 	pathOutput = './results.txt'
 else:
-	pathOutput = args.output
+	pathOutput = args.output + '/results.txt'
 
 
 ## start predictions
