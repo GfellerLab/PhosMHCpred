@@ -1,1 +1,58 @@
-# PhosMHCpred
+######
+##
+##
+## PhosMHCpred is a predictor for HLA-I - phosphorylated ligand interactions.
+##
+## CITATION:
+## If you use PhosMHCpred in a publication, please cite:
+## Solleder et al., BioRxiv (2018).
+##
+## FOR-PROFIT USERS:
+## If you plan to use PhosMHCpred or any data provided with the script in any for-profit
+## application, you are required to obtain a separate  license. To do so, please contact
+## eauffarth@licr.org or lfoit@licr.org at the Ludwig Institute for  Cancer Research Ltd.
+##
+## CONTACT:
+## Marthe Solleder (marthe.solleder@unil.ch) and David Gfeller (david.gfeller@unil.ch).
+##
+##
+######
+
+
+## PRELIMINARY
+
+  Open the PhosMHCpred.py file and replace path (l. 27) by the path to the PhosMHCpred/ directory.
+
+
+## COMMAND
+
+  ./PhosMHCpred.py -p peptides -a alleles [-o output]
+  
+  To test PhosMHCpred: ./PhosMHCpred.py -p ./test/testPeptides.txt -a ./test/testAlleles.txt -o ./test/results.txt 
+  or: ./PhosMHCpred.py -p ./test/testPeptides.txt -a HLA-A0101,HLA-B4002 -o ./test/results.txt 
+
+
+peptides [required]:
+  File listing all the peptides or give a list of peptides in the command line separated by a single
+  comma "," (e.g. ASEILPPtL,EMDPVtQLY,FTDIEtLKQ).
+
+alleles [required]:
+  Define HLA-I allele for prediction (give as HLA-A0101). If predictions with more than one alleles
+  are performed, give a file listing the alleles or list the alleles separated by a single 
+  comma (e.g. -a HLA-A0101,HLA-B4002).
+
+output [optional]:
+  Give a name of the output file (if non given, results are saved in current directory).
+
+
+## OTHER INFORMATION
+
+- PhosMHCpred is trained on naturally presented phosphorylated and unmodified HLA-I ligands and gives
+  a score for different peptides to identify the most likely HLA-I ligands for an allele (but does not
+  predict affinity values). 
+
+- The predictor can be run with more than one allele. In this case, the predictions are carried out
+  for each allele separately and the predictor outputs independent results for the alleles.
+
+- The results are provided in [output]/results.txt
+
