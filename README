@@ -5,7 +5,7 @@
 ##
 ## CITATION:
 ## If you use PhosMHCpred in a publication, please cite:
-## Solleder et al., BioRxiv (2018).
+## Solleder et al., BioRxiv (2019).
 ##
 ## FOR-PROFIT USERS:
 ## If you plan to use PhosMHCpred or any data provided with the script in any for-profit
@@ -19,9 +19,11 @@
 ######
 
 
+
 ## PRELIMINARY
 
-  Open the PhosMHCpred.py file and replace path (l. 27) by the path to the PhosMHCpred/ directory.
+  Open the PhosMHCpred.py file and replace path (l. 35) by the path to the PhosMHCpred/ directory.
+
 
 
 ## COMMAND
@@ -29,20 +31,21 @@
   ./PhosMHCpred.py -p peptides -a alleles [-o output]
   
   To test PhosMHCpred: ./PhosMHCpred.py -p ./test/testPeptides.txt -a ./test/testAlleles.txt -o ./test/results.txt 
-  or: ./PhosMHCpred.py -p ./test/testPeptides.txt -a HLA-A0101,HLA-B4002 -o ./test/results.txt 
+  or: ./PhosMHCpred.py -p ./test/testPeptides.txt -a HLA-A0201,HLA-B4002 -o ./test/results.txt 
 
 
 peptides [required]:
   File listing all the peptides or give a list of peptides in the command line separated by a single
-  comma "," (e.g. ASEILPPtL,EMDPVtQLY,FTDIEtLKQ).
+  comma "," (e.g. ALLSRNHsL,FLIsKVEQI,GLYNsTDSL).
 
 alleles [required]:
   Define HLA-I allele for prediction (give as HLA-A0101). If predictions with more than one alleles
   are performed, give a file listing the alleles or list the alleles separated by a single 
-  comma (e.g. -a HLA-A0101,HLA-B4002).
+  comma (e.g. -a HLA-A0201,HLA-B4002).
 
 output [optional]:
-  Give a name of the output file (if non given, results are saved in current directory).
+  Give a name of the output file (if non given, results are saved as "results.txt" in current directory).
+
 
 
 ## OTHER INFORMATION

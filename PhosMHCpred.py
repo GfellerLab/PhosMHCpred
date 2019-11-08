@@ -32,7 +32,7 @@ from lib.PhosMHCpred_score import main as scoreF
 
 
 ## path to predictor directory
-path = 'YOUR PATH TO /PhosMHCpred FOLDER'
+path = 'Path/To/Predictor/'
 pathTD = path + '/trainingData/'
 
 
@@ -52,7 +52,7 @@ parser.add_argument( '-a',
 parser.add_argument( '-o',
 					 '--output',
 					 help='Location for output file. Default: results.txt is stored in current directory.',
-					 default='./' )
+					 default='' )
 args = parser.parse_args()
 
 ## read peptides
@@ -87,7 +87,7 @@ if '.txt' in args.alleles:
 	listAlleles = list(filter(None, listAlleles))
 else:
 	listAlleles = args.alleles.split(',')
-#listAlleles = sorted(listAlleles)
+listAlleles = sorted(listAlleles)
 
 ## check if requested alleles are in training data
 allelesTD = open( pathTD + 'alleles.txt', 'r' ).read().split('\n')
@@ -102,14 +102,17 @@ for x in listAlleles:
 if args.output == '':
 	pathOutput = './results.txt'
 else:
-	pathOutput = args.output + '/results.txt'
+	pathOutput = args.output
 
 
 ## start predictions
 print 'Predicting ... '
 predictionResults = {}
+predictionResultsRanks = {}
 for hla in listAlleles:
 	print hla
+
+	lScores = []
 
 	## read pwm	
 	pwm = np.loadtxt(pathTD + length + 'mers/' + hla + '_PWM.txt')
@@ -123,18 +126,31 @@ for hla in listAlleles:
 		score = scoreF( peptide, 
 						pwm )
 		predictionResults[peptide][hla] = score
+		lScores.append(score)
 
+	temp = np.asarray(lScores).argsort()
+	ranks = np.empty_like(temp)
+	ranks[temp] = np.arange(len(lScores))
+	for p in range(len(listPeptides)):
+		peptide = listPeptides[p]
+		if peptide not in predictionResultsRanks:
+			predictionResultsRanks[peptide] = {}
+		if hla not in predictionResultsRanks[peptide]:
+			predictionResultsRanks[peptide][hla] = 0
+		predictionResultsRanks[peptide][hla] = -1 * (ranks[p] - len(listPeptides))
 
 ## print results
 output = open(pathOutput, 'w')
 output.write('peptide')
 for a in listAlleles:
 	output.write('\t' + a + '_score')
+	output.write('\t' + a + '_rank')
 output.write('\n')
 for p in listPeptides:
 	output.write(p)
 	for a in listAlleles:
 		output.write( '\t' + str(predictionResults[p][a]) )
+		output.write( '\t' + str(predictionResultsRanks[p][a]) )
 	output.write('\n')
 output.close()
 
